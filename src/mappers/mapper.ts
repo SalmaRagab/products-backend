@@ -1,28 +1,30 @@
 import { IProductDatabaseModel } from "../interfaces/IProductDatabaseModel";
-import { IProductResponseModel } from "../interfaces/responseModels/IProductResponseModel";
+import { IProduct } from "../interfaces/IProduct";
 
 export class Mapper {
 
     constructor() {}
 
-    public static mapProductsFromDatabaseModelToBusinessModel(productDatabaseModels: IProductDatabaseModel[]): IProductResponseModel[] {
-        let products: IProductResponseModel[] = [];
+    public static mapProductsFromDatabaseModelToBusinessModel(productDatabaseModels: IProductDatabaseModel[]): IProduct[] {
+        let products: IProduct[] = [];
         productDatabaseModels.forEach(productDatabaseModel => {
             products.push({
                 id: productDatabaseModel.productId,
-                productName: productDatabaseModel.productName,
+                name: productDatabaseModel.productName,
                 imageURI: productDatabaseModel.imageURI,
                 featured: !!productDatabaseModel.featured,
                 category: {
                     id: productDatabaseModel.categoryId,
-                    categoryName: productDatabaseModel.categoryName
+                    name: productDatabaseModel.categoryName
                 },
-                productProvider: productDatabaseModel.providerId ? {
-                    id: productDatabaseModel.providerId,
-                    providerName: productDatabaseModel.providerName,
-                    providedPrice: productDatabaseModel.price,
+                productProviders: productDatabaseModel.providerId ? [{
+                    provider: {
+                        id: productDatabaseModel.providerId,
+                        name: productDatabaseModel.providerName,
+                    },
+                    price: productDatabaseModel.price,
                     available: !!productDatabaseModel.available
-                } : null,
+                }] : null,
             });
         });
         return products;
