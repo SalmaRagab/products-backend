@@ -5,7 +5,7 @@ export function paginate() {
         req.paginationOptions = <IPaginationOptions> {
             skip: req.query.page ? req.query.page - 1 : 0,
             numberOfItemsPerPage: req.query.limit
-        };        
+        };
         next();
     }
 }
