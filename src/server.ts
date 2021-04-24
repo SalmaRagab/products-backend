@@ -7,9 +7,6 @@ import swaggerUi from 'swagger-ui-express';
 import yaml from 'yamljs';
 import * as nodepath from "path";
 
-var swagger_path = nodepath.resolve(__dirname, './api.yml');
-const swaggerDocument = yaml.load(swagger_path);
-
 const app = express()
 const port = env.SERVICE_PORT;
 
@@ -47,10 +44,20 @@ app.patch('/toggleFeatured/:id', validateParams([
     service.toggleFeaturedProduct(req, res);
 });
 
+/**
+    Define swagger
+*/
+const swaggerPath = nodepath.resolve(__dirname, './api.yml');
+const swaggerDocument = yaml.load(swaggerPath);
+const options = {
+    swaggerOptions: {
+        url: `http://localhost:${port}`
+    }
+}
 app.use(
     '/docs/',
     swaggerUi.serve,
-    swaggerUi.setup(swaggerDocument)
+    swaggerUi.setup(swaggerDocument, options)
 );
 
 app.listen(port, () => {
