@@ -33,11 +33,12 @@ CREATE TABLE provider (
 
 
 CREATE TABLE product_provider (
-    productProviderId INT PRIMARY KEY,
+    productProviderId INT NOT NULL AUTO_INCREMENT UNIQUE,
     productId INT,
     providerId INT,
     price DOUBLE,
     available BOOLEAN,
+    PRIMARY KEY (productId, providerId),
 	FOREIGN KEY (productId) REFERENCES product(productId),
 	FOREIGN KEY (providerId) REFERENCES provider(providerId) 
 );
