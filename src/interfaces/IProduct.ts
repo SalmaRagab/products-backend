@@ -3,7 +3,7 @@ import { IProductProvider } from "./IProductProvider";
 
 export interface IProduct {
     id: number;
-    productName: string;
+    name: string;
     imageURI: string;
     featured: boolean;
     category: ICategory;
