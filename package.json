@@ -5,8 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
-    "start": "tsc && cp docs/api.yml dist/api.yml && node dist/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc && cp docs/api.yml dist/api.yml && node dist/server.js"
   },
   "author": "",
   "license": "ISC",
