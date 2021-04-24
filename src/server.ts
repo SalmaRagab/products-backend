@@ -3,6 +3,12 @@ import * as env from "./environment";
 import { Service } from './service';
 import { paginate } from "./middlewares/paginationMiddleware";
 import { validateParams } from "./middlewares/inputValidationMiddlewares";
+import swaggerUi from 'swagger-ui-express';
+import yaml from 'yamljs';
+import * as nodepath from "path";
+
+var swagger_path = nodepath.resolve(__dirname, './api.yml');
+const swaggerDocument = yaml.load(swagger_path);
 
 const app = express()
 const port = env.SERVICE_PORT;
@@ -31,7 +37,7 @@ app.get('/products', validateParams([
 });
 
 
-app.patch('/featured/:id', validateParams([
+app.patch('/toggleFeatured/:id', validateParams([
     {
         in: 'params',
         paramKey: 'id',
@@ -40,6 +46,12 @@ app.patch('/featured/:id', validateParams([
     }]) , async (req, res) => {
     service.toggleFeaturedProduct(req, res);
 });
+
+app.use(
+    '/docs/',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument)
+);
 
 app.listen(port, () => {
     console.log(`Products service is listening at http://localhost:${port}`)
