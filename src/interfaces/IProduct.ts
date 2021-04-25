@@ -1,9 +1,8 @@
 import { ICategory } from "./ICategory";
 import { IProductProvider } from "./IProductProvider";
+import { IIdentifier } from "./IIdentifier";
 
-export interface IProduct {
-    id: number;
-    name: string;
+export interface IProduct extends IIdentifier {
     imageURI: string;
     featured: boolean;
     category: ICategory;

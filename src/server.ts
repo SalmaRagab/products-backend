@@ -1,8 +1,7 @@
 import express from "express";
 import * as env from "./environment";
 import { Service } from './service';
-import { paginate } from "./middlewares/paginationMiddleware";
-import { validateParams } from "./middlewares/inputValidationMiddlewares";
+import { paginate, validateParams } from "./middlewares";
 import swaggerUi from 'swagger-ui-express';
 import yaml from 'yamljs';
 import * as nodepath from "path";

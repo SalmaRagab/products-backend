@@ -1,16 +1,16 @@
-import { IProductDatabaseModel } from "../interfaces/IProductDatabaseModel";
+import { IProductDatabaseModel, IPaginationOptions } from "../interfaces";
 import { BaseRepository } from "./baseRepository";
-import { IPaginationOptions } from "../interfaces/IPaginationOptions";
 
 const DEFAULT_MAX_NUMBER_OF_PRODUCTS_FOR_RETRIEVE_QUERY = 25;
+const TABLE_NAME = 'product';
 
 export class ProductRepository extends BaseRepository {
 
     constructor() {
-        super();
+        super(TABLE_NAME);
     }
 
-    public async getAll(paginationOptions: IPaginationOptions, options): Promise<IProductDatabaseModel[]> {
+    public async getAll(paginationOptions: IPaginationOptions, filterOptions?): Promise<IProductDatabaseModel[]> {
         try {
             const limit = paginationOptions.numberOfItemsPerPage || DEFAULT_MAX_NUMBER_OF_PRODUCTS_FOR_RETRIEVE_QUERY;
             const query = `
@@ -40,7 +40,7 @@ export class ProductRepository extends BaseRepository {
                         LEFT JOIN
                     provider ON (product_provider.providerId = provider.providerId)
                 WHERE
-                    product.categoryId =  ${options.categoryId}
+                    product.categoryId =  ${filterOptions.categoryId}
                 ORDER BY product.productId
                 LIMIT ${limit}
                 OFFSET ${paginationOptions.skip * limit}

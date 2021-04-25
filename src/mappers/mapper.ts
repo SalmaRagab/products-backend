@@ -1,5 +1,4 @@
-import { IProductDatabaseModel } from "../interfaces/IProductDatabaseModel";
-import { IProduct } from "../interfaces/IProduct";
+import { IIdentifier, IProduct, IProductDatabaseModel } from "../interfaces";
 
 export class Mapper {
 
@@ -28,5 +27,16 @@ export class Mapper {
             });
         });
         return products;
+    }
+
+    public static mapDatabaseModelsToIdentifierBusinessModels(databaseModels, tableName: string): IIdentifier [] {
+        let identifierModels: IIdentifier[];
+        databaseModels.forEach(databaseModel => {
+            identifierModels.push({
+                id: databaseModel[`${tableName}Id`],
+                name: databaseModel[`${tableName}Name`]
+            });
+        });
+        return identifierModels;
     }
 }

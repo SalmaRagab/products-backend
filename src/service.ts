@@ -1,8 +1,6 @@
-import { ProductRepository } from "./repositories/productRepository";
 import { Mapper } from "./mappers/mapper";
-import { IProductDatabaseModel } from "./interfaces/IProductDatabaseModel";
-import { CategoryRepository } from "./repositories/categoryRepository";
-import { ProviderRepository } from "./repositories/providerRepository";
+import { IProductDatabaseModel } from "./interfaces";
+import { ProductRepository, CategoryRepository, ProviderRepository } from "./repositories";
 
 export class Service {
     private productRepository: ProductRepository;
@@ -43,7 +41,7 @@ export class Service {
     public async getCategories(req, res) {
         try {
             let categories = await this.categoryRepository.getAll(req.paginationOptions);
-            res.status(200).json(Mapper.mapDatabaseModelsToBusinessModels(categories, this.categoryRepository.tableName));
+            res.status(200).json(Mapper.mapDatabaseModelsToIdentifierBusinessModels(categories, this.categoryRepository.tableName));
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
@@ -52,7 +50,7 @@ export class Service {
     public async getProviders(req, res) {
         try {
             let providers = await this.providerRepository.getAll(req.paginationOptions);
-            res.status(200).json(Mapper.mapDatabaseModelsToBusinessModels(providers, this.providerRepository.tableName));
+            res.status(200).json(Mapper.mapDatabaseModelsToIdentifierBusinessModels(providers, this.providerRepository.tableName));
         } catch (error) {
             res.status(500).json({ message: error.message });
         }

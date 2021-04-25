@@ -1,4 +1,4 @@
-import { IPaginationOptions } from "../interfaces/IPaginationOptions";
+import { IPaginationOptions } from "../interfaces";
 
 export function paginate() {
     return async (req, res, next) => {

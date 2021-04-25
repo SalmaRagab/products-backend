@@ -1,4 +1,4 @@
-export interface IProvider {
-    id: number;
-    name: string;
+import { IIdentifier } from "./IIdentifier";
+
+export interface IProvider extends IIdentifier {
 }
