@@ -1,4 +1,24 @@
-export function validateParams (requestParams) {
+export interface IRequestParameterValidationSchema {
+    /**
+     * indicates where is this parameter expected to be
+     * example: query, body, params
+     */
+    in: string;
+    /**
+     * the name of the parameter to check
+     */
+    paramKey: string;
+    /**
+     * indicates whether this parameter is required in its place or not
+     */
+    required: boolean;
+    /**
+     * indicates the expected type for this parameter
+     */
+    type: string;
+}
+
+export function validateParams(requestParams: IRequestParameterValidationSchema[]) {
     return function (req, res, next) {
         for (let param of requestParams) {
             if (checkParamPresent(Object.keys(req[param.in]), param)) {
