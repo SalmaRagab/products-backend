@@ -18,5 +18,8 @@ The flow of the project:
 - Calling each endpoint will pass by the middlewares, depending on the endpoint, then will call the corresponding function from the `service`
     - Middlewares used:
         - `paginate` is used to add pagination object to the request in order to be used afterwards
+            - The paginate middleware works with page and limit from the query parameters and they're both optional
+            - If the page parameter isn't specified, it acts as page 1
+            - If the limit parameter isn't specified, the default number (*available in the repository file for each table*) is used instead
         - `validateParams` is used to validate the parameters from the requests against the expected parameters. This middleware is responsible for sending the 400 status code in the response as an indication of a bad request, for example missing parameters or different types
 - The `service` then calls the `repository` in order to perform the database action needed
