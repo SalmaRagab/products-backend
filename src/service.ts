@@ -25,7 +25,7 @@ export class Service {
             const id = req.params.id;
             const isFeatureStatusToggled = await this.productRepository.toggleFeaturedProduct(id);
             if (isFeatureStatusToggled) {
-                res.status(200).json({ message: "featured status is toggled successfully" })
+                res.status(204).send();
             } else {
                 res.status(404).json({ message: `product with id: ${id} isn't found` })
             }

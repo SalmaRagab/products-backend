@@ -23,7 +23,7 @@ paths:
           name: limit
           schema:
             type: number
-            description: the maximum number of products in the requested page
+            description: the maximum number of products in the requested page, if it's not defined, the default is 25
             example: 25
       responses:
         '200':
@@ -34,6 +34,24 @@ paths:
                 type: array
                 items: 
                   $ref: '#/components/schemas/Product'
+        '400':
+          description: Indicates a bad request as a result of input validator error
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  message:
+                    type: string
   /toggleFeatured/{id}:
     patch:
       summary: Toggles (set/unset) a product as featured inside its category
@@ -46,8 +64,10 @@ paths:
             example: 1
           description: The id of the product to set/unset featured status
       responses:
-        '200':
-          description: The toggle operation was done successfully
+        '204':
+          description: The toggle operation was executed successfully
+        '400':
+          description: Indicates a bad request as a result of input validator error
           content:
             application/json:
               schema: 
