@@ -1,18 +1,24 @@
 import { ProductRepository } from "./repositories/productRepository";
 import { Mapper } from "./mappers/mapper";
 import { IProductDatabaseModel } from "./interfaces/IProductDatabaseModel";
+import { CategoryRepository } from "./repositories/categoryRepository";
+import { ProviderRepository } from "./repositories/providerRepository";
 
 export class Service {
     private productRepository: ProductRepository;
-    
+    private categoryRepository: CategoryRepository;
+    private providerRepository: ProviderRepository;
+
     constructor() {
         this.productRepository = new ProductRepository();
+        this.categoryRepository = new CategoryRepository();
+        this.providerRepository = new ProviderRepository();
     }
 
     public async getProducts(req, res) {
         try {
-            const categoryId = req.query.categoryId as string;
-            let productDatabaseModels: IProductDatabaseModel[] = await this.productRepository.getAll(req.paginationOptions, { categoryId });
+            const filterOptions = { categoryId: req.query.categoryId as string };
+            let productDatabaseModels: IProductDatabaseModel[] = await this.productRepository.getAll(req.paginationOptions, filterOptions);
             const products = Mapper.mapProductsFromDatabaseModelToBusinessModel(productDatabaseModels);
             res.status(200).json(products);
         } catch (error) {
@@ -29,6 +35,24 @@ export class Service {
             } else {
                 res.status(404).json({ message: `product with id: ${id} isn't found` })
             }
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+    
+    public async getCategories(req, res) {
+        try {
+            let categories = await this.categoryRepository.getAll(req.paginationOptions);
+            res.status(200).json(Mapper.mapDatabaseModelsToBusinessModels(categories, this.categoryRepository.tableName));
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    public async getProviders(req, res) {
+        try {
+            let providers = await this.providerRepository.getAll(req.paginationOptions);
+            res.status(200).json(Mapper.mapDatabaseModelsToBusinessModels(providers, this.providerRepository.tableName));
         } catch (error) {
             res.status(500).json({ message: error.message });
         }

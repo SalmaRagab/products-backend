@@ -45,6 +45,16 @@ app.patch('/toggleFeatured/:id', validateParams([
 });
 
 /**
+ * Extra endpoints that use pagination middleware
+ */
+app.get('/categories', paginate(), function (req, res) {
+    service.getCategories(req, res);
+});
+app.get('/providers', paginate(), function (req, res) {
+    service.getProviders(req, res);
+});
+
+/**
     Define swagger
 */
 const swaggerPath = nodepath.resolve(__dirname, './api.yml');
