@@ -1,4 +1,4 @@
-# Products backend task
+# Products backend
 
 Prerequisites:
 - For the database:
@@ -11,3 +11,11 @@ How to run?
 - To start the server use `npm start`
 - To check the API documentation, navigate to (http://localhost:3000/docs)
 - In the folder `docs/postmanCollection`, there's an attached postman collection in order to test the endpoints, but requests can also be sent from the swagger documentation
+---
+Functional documentation:
+- Starting the project will run the `server` file, which will initiate the `service` file
+- Calling each endpoint will pass by the middlewares, depending on the endpoint, then will call the corresponding function from the `service`
+    - Middlewares used:
+        - `paginate` is used to add pagination object to the request in order to be used afterwards
+        - `validateParams` is used to validate the parameters from the requests against the expected parameters. This middleware is responsible for sending the 400 status code in the response as an indication of a bad request, for example missing parameters or different types
+- The `service` then calls the `repository` in order to perform the database action needed
