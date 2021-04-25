@@ -30,7 +30,7 @@ export class Mapper {
     }
 
     public static mapDatabaseModelsToIdentifierBusinessModels(databaseModels, tableName: string): IIdentifier [] {
-        let identifierModels: IIdentifier[];
+        let identifierModels: IIdentifier[] = [];
         databaseModels.forEach(databaseModel => {
             identifierModels.push({
                 id: databaseModel[`${tableName}Id`],
